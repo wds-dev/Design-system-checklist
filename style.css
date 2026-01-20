@@ -1,0 +1,178 @@
+@import url(https://fonts.bunny.net/css?family=poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i);
+
+:root {
+    color-scheme: light dark;
+}
+
+body {
+    font-family: 'Poppins', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    margin: 24px;
+    line-height: 1.4;
+    max-width: 920px;
+}
+
+header {
+    display: grid;
+    gap: 8px;
+    margin-bottom: 18px;
+}
+
+.bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+    padding: 10px;
+    border: 1px solid rgba(127, 127, 127, .35);
+    border-radius: 10px;
+}
+
+button {
+    padding: 8px 10px;
+    border-radius: 10px;
+    border: 1px solid rgba(127, 127, 127, .35);
+    background: transparent;
+    cursor: pointer;
+}
+
+button#checkAll {
+    border-color: green;
+    background-color: rgb(179, 250, 179);
+}
+
+button#checkAll:hover {
+    background-color: rgb(115, 255, 115);
+}
+
+button#uncheckAll {
+    border-color: rgb(185, 185, 71);
+    background-color: rgb(255, 255, 182);
+}
+
+button#uncheckAll:hover {
+    background-color: rgb(239, 239, 76);
+}
+
+button#reset {
+    border-color: rgb(137, 56, 56);
+    background-color: rgb(255, 174, 174);
+}
+
+button#reset:hover {
+    background-color: rgb(255, 109, 109);
+}
+
+button:hover {
+    border-color: rgba(127, 127, 127, .65);
+}
+
+.muted {
+    opacity: .6;
+    font-size: 14px;
+}
+
+.progress {
+    font-variant-numeric: tabular-nums;
+}
+
+.chapters {
+    display: grid;
+    gap: 14px;
+}
+
+.chapter {
+    border: 1px solid rgba(127, 127, 127, .35);
+    border-radius: 14px;
+    overflow: hidden;
+}
+
+.chapter-header {
+    width: 100%;
+    text-align: left;
+    background: transparent;
+    border: 0;
+    padding: 14px;
+    display: grid;
+    gap: 6px;
+    cursor: pointer;
+}
+
+.chapter-header:hover {
+    background: rgba(127, 127, 127, .08);
+}
+
+.chapter-title-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0;
+}
+
+.chapter-title {
+    margin: 0;
+    font-size: 18px;
+}
+
+.chapter-progress {
+    margin-left: auto;
+    opacity: .8;
+    font-size: 14px;
+    font-variant-numeric: tabular-nums;
+}
+
+.chapter-desc {
+    opacity: .6;
+    font-size: 14px;
+}
+
+.chapter-chevron {
+    opacity: .7;
+    font-size: 14px;
+    transform: translateY(1px);
+}
+
+.chapter-body {
+    padding: 0 14px 14px 14px;
+    display: block;
+}
+
+.chapter.is-collapsed .chapter-body {
+    display: none;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 10px;
+}
+
+li {
+    border: 1px solid rgba(127, 127, 127, .25);
+    border-radius: 12px;
+    padding: 12px 12px;
+    display: grid;
+    gap: 6px;
+}
+
+label {
+    display: flex;
+    gap: 10px;
+    align-items: start;
+    cursor: pointer;
+}
+
+input[type="checkbox"] {
+    transform: translateY(2px);
+}
+
+.desc {
+    margin-left: 32px;
+    opacity: .6;
+    font-size: 14px;
+}
+
+.ph {
+    margin-right: .5rem;
+}

@@ -2,146 +2,23 @@
 <html lang="it">
 
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Design system checklist</title>
-    <style>
-        @import url(https://fonts.bunny.net/css?family=poppins:100,100i,200,200i,300,300i,600,600i,800,800i);
-        :root {
-            color-scheme: light dark;
-        }
-        body {
-            font-family: 'Poppins', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-            margin: 24px;
-            line-height: 1.4;
-            max-width: 920px;
-        }
-        header {
-            display: grid;
-            gap: 8px;
-            margin-bottom: 18px;
-        }
-        .bar {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            align-items: center;
-            padding: 10px;
-            border: 1px solid rgba(127, 127, 127, .35);
-            border-radius: 10px;
-        }
-        button {
-            padding: 8px 10px;
-            border-radius: 10px;
-            border: 1px solid rgba(127, 127, 127, .35);
-            background: transparent;
-            cursor: pointer;
-        }
-        button:hover {
-            border-color: rgba(127, 127, 127, .65);
-        }
-        .muted {
-            opacity: .75;
-            font-size: 14px;
-        }
-        .progress {
-            font-variant-numeric: tabular-nums;
-        }
-        .chapters {
-            display: grid;
-            gap: 14px;
-        }
-        .chapter {
-            border: 1px solid rgba(127, 127, 127, .35);
-            border-radius: 14px;
-            overflow: hidden;
-        }
-        .chapter-header {
-            width: 100%;
-            text-align: left;
-            background: transparent;
-            border: 0;
-            padding: 14px;
-            display: grid;
-            gap: 6px;
-            cursor: pointer;
-        }
-        .chapter-header:hover {
-            background: rgba(127, 127, 127, .08);
-        }
-        .chapter-title-row {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: baseline;
-            gap: 10px;
-        }
-        .chapter-title {
-            margin: 0;
-            font-size: 18px;
-        }
-        .chapter-progress {
-            margin-left: auto;
-            opacity: .8;
-            font-size: 14px;
-            font-variant-numeric: tabular-nums;
-        }
-        .chapter-desc {
-            opacity: .8;
-            font-size: 14px;
-        }
-        .chapter-chevron {
-            opacity: .7;
-            font-size: 14px;
-            transform: translateY(1px);
-        }
-        .chapter-body {
-            padding: 0 14px 14px 14px;
-            display: block;
-        }
-        .chapter.is-collapsed .chapter-body {
-            display: none;
-        }
-        ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            display: grid;
-            gap: 10px;
-        }
-        li {
-            border: 1px solid rgba(127, 127, 127, .25);
-            border-radius: 12px;
-            padding: 12px 12px;
-            display: grid;
-            gap: 6px;
-        }
-        label {
-            display: flex;
-            gap: 10px;
-            align-items: start;
-            cursor: pointer;
-        }
-        input[type="checkbox"] {
-            transform: translateY(2px);
-        }
-        .desc {
-            margin-left: 26px;
-            opacity: .8;
-            font-size: 14px;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.2/src/regular/style.min.css">
 </head>
 <body>
     <header>
-        <h1 style="margin:0;">Checklist per un design system completo</h1>
+        <h1 style="margin:0;"><i class="ph ph-list-checks"></i> Checklist per un design system completo</h1>
 
         <div class="bar">
             <strong class="progress" id="progress">0/0</strong>
             <span class="muted" id="lastSaved"></span>
             <span style="flex:1;"></span>
-            <button type="button" id="checkAll">Seleziona tutto</button>
-            <button type="button" id="uncheckAll">Deseleziona tutto</button>
-            <button type="button" id="reset">Reset</button>
+            <button type="button" id="checkAll"><i class="ph ph-check-square"></i>Seleziona tutto</button>
+            <button type="button" id="uncheckAll"><i class="ph ph-minus-square"></i>Deseleziona tutto</button>
+            <button type="button" id="reset"><i class="ph ph-trash-simple"></i>Reset</button>
         </div>
 
         <p class="muted" style="margin:0;">
@@ -158,17 +35,17 @@
         const chapters = [
             {
                 id: "colours",
-                title: "Colours",
-                desc: "Palette, regole d’uso e mappature semantiche.",
+                title: "1. Colori",
+                desc: "Palette, regole d'uso e mappature semantiche.",
                 items: [
                     { id: "colours_1", title: "Colour palette" },
-                    { id: "colours_2", title: "Mappatura dei colori", desc: "Quando usare un colore, per quali elementi." },
+                    { id: "colours_2", title: "Mappatura semantica dei colori", desc: "Quando usare un colore, per quali elementi." },
                 ],
             },
             {
                 id: "typography",
-                title: "Tipografia",
-                desc: "Famiglia font, peso e stile.",
+                title: "2. Tipografia",
+                desc: "Famiglie font, pesi e stili.",
                 items: [
                     { id: "typography_1", title: "Heading" },
                     { id: "typography_1", title: "Body" },
@@ -281,7 +158,10 @@
 
             const $chev = document.createElement("span");
             $chev.className = "chapter-chevron";
-            $chev.textContent = isCollapsed ? "▶" : "▼";
+            // $chev.textContent = isCollapsed ? "▶" : "▼";
+            $chev.innerHTML = isCollapsed
+                ? '<i class="ph ph-caret-right"></i>'
+                : '<i class="ph ph-caret-down"></i>';
 
             const $prog = document.createElement("div");
             $prog.className = "chapter-progress";
@@ -423,7 +303,13 @@
 
             // aggiorna freccia
             const chev = btn.querySelector(".chapter-chevron");
-            if (chev) chev.textContent = isCollapsed ? "▶" : "▼";
+            // if (chev) chev.textContent = isCollapsed ? "▶" : "▼";
+            if (chev) {
+                chev.innerHTML = isCollapsed
+                ? '<i class="ph ph-caret-right"></i>'
+                : '<i class="ph ph-caret-down"></i>';
+            }
+
         });
 
         // Bulk actions
