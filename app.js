@@ -1,0 +1,305 @@
+// Checklist app
+
+// Capitoli - desc e item.desc sono opzionali
+const chapters = [
+    {
+        id: "colours",
+        title: "1. Colori",
+        desc: "Palette, regole d'uso e mappature semantiche.",
+        items: [
+            { id: "colours_1", title: "Colour palette" },
+            { id: "colours_2", title: "Mappatura semantica dei colori", desc: "Quando usare un colore, per quali elementi." },
+        ],
+    },
+    {
+        id: "typography",
+        title: "2. Tipografia",
+        desc: "Famiglie font, pesi e stili.",
+        items: [
+            { id: "typography_1", title: "Heading" },
+            { id: "typography_1", title: "Body" },
+            { id: "typography_1", title: "Altro", desc: "Qualsiasi altra casistica necessaria al progetto." },
+        ],
+    },
+];
+
+// Storage keys
+const STORAGE_KEY_CHECKED = "checklist:v3:checked";
+const STORAGE_KEY_UI = "checklist:v3:ui";
+
+const $chapters = document.getElementById("chapters");
+const $progress = document.getElementById("progress");
+const $lastSaved = document.getElementById("lastSaved");
+
+const $checkAll = document.getElementById("checkAll");
+const $uncheckAll = document.getElementById("uncheckAll");
+const $reset = document.getElementById("reset");
+
+function allItemsFlat() {
+    const all = [];
+    for (const ch of chapters) {
+        for (const it of ch.items) {
+            all.push(it);
+        }
+    }
+    return all;
+}
+
+function loadCheckedState() {
+    try {
+        const raw = localStorage.getItem(STORAGE_KEY_CHECKED);
+        if (!raw) return { checked: {}, lastSaved: null };
+
+        const parsed = JSON.parse(raw);
+
+        return {
+            checked: parsed.checked || {},
+            lastSaved: parsed.lastSaved || null,
+        };
+    } catch {
+        return { checked: {}, lastSaved: null };
+    }
+}
+
+function saveCheckedState(state) {
+    const payload = {
+        checked: state.checked,
+        lastSaved: Date.now(),
+    };
+
+    localStorage.setItem(STORAGE_KEY_CHECKED, JSON.stringify(payload));
+    return payload.lastSaved;
+}
+
+function loadUIState() {
+    try {
+        const raw = localStorage.getItem(STORAGE_KEY_UI);
+        if (!raw) return { collapsed: {} };
+
+        const parsed = JSON.parse(raw);
+
+        return {
+            collapsed: parsed.collapsed || {},
+        };
+    } catch {
+        return { collapsed: {} };
+    }
+}
+
+function saveUIState(ui) {
+    const payload = { collapsed: ui.collapsed };
+    localStorage.setItem(STORAGE_KEY_UI, JSON.stringify(payload));
+}
+
+function formatLastSaved(ts) {
+    if (!ts) return "";
+    return `Ultimo salvataggio: ${new Date(ts).toLocaleString("it-IT", {
+        dateStyle: "medium",
+        timeStyle: "short",
+    })}`;
+}
+
+function computeChapterProgress(chapter, checkedState) {
+    const total = chapter.items.length;
+    const done = chapter.items.reduce((acc, it) => acc + (checkedState.checked[it.id] ? 1 : 0), 0);
+    return { done, total };
+}
+
+function computeGlobalProgress(checkedState) {
+    const items = allItemsFlat();
+    const total = items.length;
+    const done = items.reduce((acc, it) => acc + (checkedState.checked[it.id] ? 1 : 0), 0);
+    return { done, total };
+}
+
+function createChapterHeader(chapter, chapterProgressText, isCollapsed) {
+    const $btn = document.createElement("button");
+    $btn.type = "button";
+    $btn.className = "chapter-header";
+    $btn.dataset.chapterToggle = chapter.id;
+
+    const $row = document.createElement("div");
+    $row.className = "chapter-title-row";
+
+    const $title = document.createElement("h2");
+    $title.className = "chapter-title";
+    $title.textContent = chapter.title;
+
+    const $chev = document.createElement("span");
+    $chev.className = "chapter-chevron";
+    // $chev.textContent = isCollapsed ? "▶" : "▼";
+    $chev.innerHTML = isCollapsed
+        ? '<i class="ph ph-caret-right"></i>'
+        : '<i class="ph ph-caret-down"></i>';
+
+    const $prog = document.createElement("div");
+    $prog.className = "chapter-progress";
+    $prog.dataset.chapterProgress = chapter.id;
+    $prog.textContent = chapterProgressText;
+
+    $row.appendChild($chev);
+    $row.appendChild($title);
+    $row.appendChild($prog);
+
+    $btn.appendChild($row);
+
+    if (chapter.desc) {
+        const $desc = document.createElement("div");
+        $desc.className = "chapter-desc";
+        $desc.textContent = chapter.desc;
+        $btn.appendChild($desc);
+    }
+
+    return $btn;
+}
+
+function render(checkedState, uiState) {
+    $chapters.innerHTML = "";
+
+    for (const chapter of chapters) {
+        const $chapter = document.createElement("section");
+        $chapter.className = "chapter";
+        $chapter.dataset.chapterId = chapter.id;
+
+        const isCollapsed = Boolean(uiState.collapsed[chapter.id]);
+
+        if (isCollapsed) {
+            $chapter.classList.add("is-collapsed");
+        }
+
+        const { done, total } = computeChapterProgress(chapter, checkedState);
+        const headerText = `${done}/${total}`;
+
+        const $headerBtn = createChapterHeader(chapter, headerText, isCollapsed);
+
+        const $body = document.createElement("div");
+        $body.className = "chapter-body";
+
+        const $list = document.createElement("ul");
+        $list.dataset.chapterList = chapter.id;
+
+        for (const item of chapter.items) {
+            const li = document.createElement("li");
+
+            const label = document.createElement("label");
+
+            const cb = document.createElement("input");
+            cb.type = "checkbox";
+            cb.dataset.id = item.id;
+            cb.checked = Boolean(checkedState.checked[item.id]);
+
+            const title = document.createElement("span");
+            title.textContent = item.title;
+
+            label.appendChild(cb);
+            label.appendChild(title);
+            li.appendChild(label);
+
+            if (item.desc) {
+                const p = document.createElement("div");
+                p.className = "desc";
+                p.textContent = item.desc;
+                li.appendChild(p);
+            }
+
+            $list.appendChild(li);
+        }
+
+        $body.appendChild($list);
+
+        $chapter.appendChild($headerBtn);
+        $chapter.appendChild($body);
+
+        $chapters.appendChild($chapter);
+    }
+
+    updateUI(checkedState);
+}
+
+function updateUI(checkedState) {
+    // Global progress
+    const global = computeGlobalProgress(checkedState);
+    $progress.textContent = `${global.done}/${global.total}`;
+
+    // Chapter progress (aggiorno i numeri senza rifare tutto il render)
+    for (const chapter of chapters) {
+        const { done, total } = computeChapterProgress(chapter, checkedState);
+        const el = document.querySelector(`[data-chapter-progress="${chapter.id}"]`);
+        if (el) el.textContent = `${done}/${total}`;
+    }
+
+    // Last saved
+    $lastSaved.textContent = formatLastSaved(checkedState.lastSaved);
+}
+
+// Init
+let checkedState = loadCheckedState();
+let uiState = loadUIState();
+
+render(checkedState, uiState);
+
+// Checkbox change
+$chapters.addEventListener("change", (e) => {
+    const el = e.target;
+    if (!(el instanceof HTMLInputElement)) return;
+    if (el.type !== "checkbox") return;
+
+    const id = el.dataset.id;
+    checkedState.checked[id] = el.checked;
+
+    checkedState.lastSaved = saveCheckedState(checkedState);
+    updateUI(checkedState);
+});
+
+// Toggle collapse (click sul bottone capitolo)
+$chapters.addEventListener("click", (e) => {
+    const target = e.target;
+    if (!(target instanceof HTMLElement)) return;
+
+    const btn = target.closest("[data-chapter-toggle]");
+    if (!btn) return;
+
+    const chapterId = btn.getAttribute("data-chapter-toggle");
+    if (!chapterId) return;
+
+    const section = document.querySelector(`[data-chapter-id="${chapterId}"]`);
+    if (!section) return;
+
+    const isCollapsed = section.classList.toggle("is-collapsed");
+    uiState.collapsed[chapterId] = isCollapsed;
+
+    saveUIState(uiState);
+
+    // aggiorna freccia
+    const chev = btn.querySelector(".chapter-chevron");
+    // if (chev) chev.textContent = isCollapsed ? "▶" : "▼";
+    if (chev) {
+        chev.innerHTML = isCollapsed
+            ? '<i class="ph ph-caret-right"></i>'
+            : '<i class="ph ph-caret-down"></i>';
+    }
+
+});
+
+// Bulk actions
+$checkAll.addEventListener("click", () => {
+    for (const it of allItemsFlat()) checkedState.checked[it.id] = true;
+    checkedState.lastSaved = saveCheckedState(checkedState);
+    render(checkedState, uiState);
+});
+
+$uncheckAll.addEventListener("click", () => {
+    for (const it of allItemsFlat()) checkedState.checked[it.id] = false;
+    checkedState.lastSaved = saveCheckedState(checkedState);
+    render(checkedState, uiState);
+});
+
+$reset.addEventListener("click", () => {
+    localStorage.removeItem(STORAGE_KEY_CHECKED);
+    localStorage.removeItem(STORAGE_KEY_UI);
+
+    checkedState = { checked: {}, lastSaved: null };
+    uiState = { collapsed: {} };
+
+    render(checkedState, uiState);
+});
