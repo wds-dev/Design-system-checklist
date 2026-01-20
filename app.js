@@ -208,7 +208,7 @@ const chapters = [
             {
                 id: "component_1",
                 title: "Stati",
-                desc: "Definisci come cambia un componente nei principali stati: default, hover, active, focus, disabled, loading, error. (Se manca focus, la navigazione da tastiera si <em>rompe</em>.)",
+                desc: "Definisci come cambia un componente nei principali stati: default, hover, active, focus, disabled, loading, error. (Se manca focus, la navigazione da tastiera si 'rompe'.)",
             },
             {
                 id: "component_2",
