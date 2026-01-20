@@ -6,11 +6,12 @@
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Design system checklist</title>
     <style>
+        @import url(https://fonts.bunny.net/css?family=poppins:100,100i,200,200i,300,300i,600,600i,800,800i);
         :root {
             color-scheme: light dark;
         }
         body {
-            font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+            font-family: 'Poppins', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
             margin: 24px;
             line-height: 1.4;
             max-width: 920px;
@@ -132,7 +133,7 @@
 </head>
 <body>
     <header>
-        <h1 style="margin:0;">Checklist</h1>
+        <h1 style="margin:0;">Checklist per un design system completo</h1>
 
         <div class="bar">
             <strong class="progress" id="progress">0/0</strong>
@@ -162,6 +163,16 @@
                 items: [
                     { id: "colours_1", title: "Colour palette" },
                     { id: "colours_2", title: "Mappatura dei colori", desc: "Quando usare un colore, per quali elementi." },
+                ],
+            },
+            {
+                id: "typography",
+                title: "Tipografia",
+                desc: "Famiglia font, peso e stile.",
+                items: [
+                    { id: "typography_1", title: "Heading" },
+                    { id: "typography_1", title: "Body" },
+                    { id: "typography_1", title: "Altro", desc: "Qualsiasi altra casistica necessaria al progetto." },
                 ],
             },
         ];
