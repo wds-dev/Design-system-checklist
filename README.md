@@ -23,17 +23,17 @@ Lo stato viene salvato nel browser tramite `localStorage`.
 
 ## Come modificare la checklist
 
-Apri `index.html` e modifica la variabile `chapters`:
+Apri `app.js` e modifica la variabile `chapters`:
 
 ```js
 const chapters = [
   {
-    id: "setup",
-    title: "Setup",
+    id: "capitolo1",
+    title: "Capitolo 1",
     desc: "Descrizione del capitolo (opzionale)",
     items: [
-      { id: "setup_1", title: "Installare strumenti" },
-      { id: "setup_2", title: "Configurare progetto", desc: "Descrizione item (opzionale)" },
+      { id: "item_1", title: "Titolo item 1" },
+      { id: "item:2", title: "Titolo item 2", desc: "Descrizione item (opzionale)" },
     ],
   },
 ];
