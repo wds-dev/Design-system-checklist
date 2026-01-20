@@ -3,12 +3,12 @@
 // Capitoli - desc e item.desc sono opzionali
 const chapters = [
     {
-        id: "colours",
+        id: "colors",
         title: "1. Colori",
         desc: "Palette, regole d'uso e mappature semantiche.",
         items: [
-            { id: "colours_1", title: "Colour palette" },
-            { id: "colours_2", title: "Mappatura semantica dei colori", desc: "Quando usare un colore, per quali elementi." },
+            { id: "colors_1", title: "Color palette" },
+            { id: "colors_2", title: "Mappatura semantica dei colori", desc: "Quando usare un colore, per quali elementi." },
         ],
     },
     {
