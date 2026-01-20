@@ -10,12 +10,12 @@ const chapters = [
             {
                 id: "colors_1",
                 title: "Color palette",
-                desc: "Colori base del progetto: primari, secondari e neutri. Includi almeno valori HEX e un esempio di combinazioni corrette.",
+                desc: "Colori base del progetto: primari, secondari e neutri. Includere almeno valori HEX e un esempio di combinazioni corrette.",
             },
             {
                 id: "colors_2",
                 title: "Mappatura semantica dei colori",
-                desc: "Quando usare un colore e per quali elementi (es. primary = azioni principali, danger = errori). Evita scelte 'a gusto'.",
+                desc: "Quando usare un colore e per quali elementi (es. 'primary' per le azioni principali, 'danger' per gli errori). Evitare scelte a gusto.",
             },
         ],
     },
@@ -37,7 +37,7 @@ const chapters = [
             {
                 id: "typography_3",
                 title: "Links styles",
-                desc: "Aspetto e comportamento dei link nei diversi contesti: in un paragrafo, in una navbar, su sfondo scuro. Indica hover/focus/visited.",
+                desc: "Aspetto e comportamento dei link nei diversi contesti: in un paragrafo, in una navbar, su sfondo scuro. Indicare hover/focus/visited.",
             },
             {
                 id: "typography_4",
@@ -59,17 +59,17 @@ const chapters = [
             {
                 id: "layout_2",
                 title: "Breakpoints",
-                desc: "Soglie di larghezza che attivano cambi di layout. Specifica cosa cambia (colonne, spaziature, tipografia) e non solo i numeri.",
+                desc: "Soglie di larghezza che attivano cambi di layout. Specificare cosa cambia (colonne, spaziature, tipografia) e non solo i numeri.",
             },
             {
                 id: "layout_3",
                 title: "Spaziatura",
-                desc: "Scala di spacing (es. 4/8/12/16...) e uso semantico: padding, margin, gap tra componenti. L'obiettivo è coerenza, non 'a occhio'.",
+                desc: "Scala di spacing (es. 4/8/12/16...) e uso semantico: padding, margin, gap tra componenti. L'obiettivo è lavorare con coerenza, non 'a occhio'.",
             },
             {
                 id: "layout_4",
                 title: "Borders",
-                desc: "Spessore dei bordi e raggi (radius) consentiti. Indica anche quando usare bordi vs separatori vs background.",
+                desc: "Spessore dei bordi e raggi (radius) consentiti. Indicare anche quando usare bordi o separatori o background.",
             },
         ],
     },
@@ -86,12 +86,12 @@ const chapters = [
             {
                 id: "ui_kit_2",
                 title: "Bottoni",
-                desc: "Tipi di button (primary/secondary/tertiary), dimensioni e uso. Specifica anche quando NON usare un button (es. per un link).",
+                desc: "Tipi di bottoni (primary/secondary/tertiary), dimensioni e uso. Specificare anche quando non usare un bottone (es. per un link).",
             },
             {
                 id: "ui_kit_3",
                 title: "Inputs",
-                desc: "Campi di testo e varianti: placeholder, label, helper text, errore, successo. Indica spacing e allineamenti standard.",
+                desc: "Campi di testo e varianti: placeholder, label, helper text, errore, successo. Indicare spacing e allineamenti standard.",
             },
             {
                 id: "ui_kit_4",
@@ -106,17 +106,17 @@ const chapters = [
             {
                 id: "ui_kit_6",
                 title: "Checkboxes",
-                desc: "Selezione multipla: dimensioni, allineamento con testo, stati (checked/indeterminate) e regola pratica: una checkbox = un'opzione indipendente.",
+                desc: "Selezione multipla: dimensioni, allineamento con testo, stati (checked/unchecked) e regola pratica: una checkbox equivale a un'opzione indipendente.",
             },
             {
                 id: "ui_kit_7",
                 title: "Radio buttons",
-                desc: "Scelta singola tra opzioni: layout (verticale/orizzontale), spaziatura e regola: radio = una sola scelta possibile.",
+                desc: "Scelta singola tra opzioni: layout (verticale/orizzontale), spaziatura e regola: un radio button equivale a una sola scelta possibile.",
             },
             {
                 id: "ui_kit_8",
-                title: "Switches",
-                desc: "On/off immediato: quando usarlo (azioni reversibili), testo associato, stato attivo e feedback immediato del cambiamento.",
+                title: "Switches / toggles",
+                desc: "Interruttori: quando usarlo (azioni reversibili), testo associato, stato attivo e feedback immediato del cambiamento.",
             },
             {
                 id: "ui_kit_9",
@@ -126,7 +126,7 @@ const chapters = [
             {
                 id: "ui_kit_10",
                 title: "Controls",
-                desc: "Controlli vari (slider, stepper, controlli dei player audio/video). Definisci l'aspetto minimo e come comunicano il valore.",
+                desc: "Controlli vari (slider, stepper, controlli dei player audio/video). Definire l'aspetto minimo e come comunicano il valore.",
             },
             {
                 id: "ui_kit_11",
@@ -136,7 +136,7 @@ const chapters = [
             {
                 id: "ui_kit_12",
                 title: "Widgets",
-                desc: "Elementi compositi (es. Key Performance Indicator, tile, summary box). Definisci struttura, spaziature e regole per non creare mille varianti incompatibili.",
+                desc: "Elementi compositi (es. Key Performance Indicator, tile, summary box). Definire struttura, spaziature e regole per non creare mille varianti incompatibili.",
             },
             {
                 id: "ui_kit_13",
@@ -146,7 +146,7 @@ const chapters = [
             {
                 id: "ui_kit_14",
                 title: "Toast / snackbar",
-                desc: "Messaggi brevi non bloccanti: durata, posizione, tono (success/warn/error) e quando evitare (se serve attenzione → dialog/alert).",
+                desc: "Messaggi brevi non bloccanti: durata, posizione, tono (success/warn/error) e quando evitare.",
             },
             {
                 id: "ui_kit_15",
@@ -156,7 +156,7 @@ const chapters = [
             {
                 id: "ui_kit_16",
                 title: "Modals",
-                desc: "Overlay più ricchi dei dialog: contenuti più lunghi o form. Definisci dimensioni, scroll interno, chiusura e cosa succede su mobile.",
+                desc: "Overlay più ricchi dei dialog: contenuti più lunghi o form. Definire dimensioni, scroll interno, chiusura e cosa succede su mobile.",
             },
             {
                 id: "ui_kit_17",
@@ -171,7 +171,7 @@ const chapters = [
             {
                 id: "ui_kit_19",
                 title: "Breadcrumbs",
-                desc: "Traccia di navigazione gerarchica: quando mostrarla, come gestire titoli lunghi e qual è l'elemento cliccabile vs corrente.",
+                desc: "Traccia di navigazione gerarchica: quando mostrarla, come gestire titoli lunghi e qual è l'elemento cliccabile o corrente.",
             },
             {
                 id: "ui_kit_20",
@@ -186,7 +186,7 @@ const chapters = [
             {
                 id: "ui_kit_22",
                 title: "Carousel",
-                desc: "Slider di contenuti: quando usarlo (pochi contenuti, storytelling) e quando evitarlo. Indica controlli (dots/frecce) e swipe su mobile.",
+                desc: "Slider di contenuti: quando usarlo (pochi contenuti, storytelling) e quando evitarlo. Indicare controlli (dots/frecce) e swipe su mobile.",
             },
             {
                 id: "ui_kit_23",
@@ -196,7 +196,7 @@ const chapters = [
             {
                 id: "ui_kit_24",
                 title: "Altro",
-                desc: "Qualsiasi UI del progetto che non rientra nelle categorie sopra. Se esiste spesso, merita una categoria dedicata.",
+                desc: "Qualsiasi UI del progetto che non rientra nelle categorie sopra. Se è un elemento che si ripete, merita una categoria dedicata.",
             },
         ],
     },
@@ -208,12 +208,12 @@ const chapters = [
             {
                 id: "component_1",
                 title: "Stati",
-                desc: "Definisci come cambia un componente nei principali stati: default, hover, active, focus, disabled, loading, error. (Se manca focus, la navigazione da tastiera si 'rompe'.)",
+                desc: "Definire come cambia un componente nei principali stati: default, hover, active, focus, disabled, loading, error. (Se manca 'focus', la navigazione da tastiera si 'rompe'.)",
             },
             {
                 id: "component_2",
                 title: "Varianti",
-                desc: "Regole per varianti controllate (dimensione, tono, con/senza icona). Poche varianti e utili.",
+                desc: "Regole per varianti controllate (dimensione, tono, con/senza icona). Poche varianti ma utili.",
             },
         ],
     },
