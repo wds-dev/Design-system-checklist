@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="it">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Design system checklist</title>
+    <style>
+    :root {
+        color-scheme: light dark;
+    }
+    body {
+        font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+        margin: 24px;
+        line-height: 1.4;
+        max-width: 820px;
+    }
+    header {
+        display: grid;
+        gap: 8px;
+        margin-bottom: 18px;
+    }
+    .bar {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        align-items: center;
+        padding: 10px;
+        border: 1px solid rgba(127,127,127,.35);
+        border-radius: 10px;
+    }
+    button {
+        padding: 8px 10px;
+        border-radius: 10px;
+        border: 1px solid rgba(127,127,127,.35);
+        background: transparent;
+        cursor: pointer;
+    }
+    button:hover {
+        border-color: rgba(127,127,127,.65);
+    }
+    .muted {
+        opacity: .75;
+        font-size: 14px;
+    }
+    ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: grid;
+        gap: 10px;
+    }
+    li {
+        border: 1px solid rgba(127,127,127,.35);
+        border-radius: 12px;
+        padding: 12px 12px;
+        display: grid;
+        gap: 6px;
+    }
+    label {
+        display: flex;
+        gap: 10px;
+        align-items: start;
+        cursor: pointer;
+    }
+    input[type="checkbox"] {
+        transform: translateY(2px);
+    }
+    .desc {
+        margin-left: 26px;
+        opacity: .8;
+        font-size: 14px;
+    }
+    .progress {
+        font-variant-numeric: tabular-nums;
+    }
+    </style>
+</head>
+
+<body>
+    <header>
+    <h1 style="margin:0;">Checklist per un design system completo</h1>
+
+    <div class="bar">
+        <strong class="progress" id="progress">0/0</strong>
+        <span class="muted" id="lastSaved"></span>
+        <span style="flex:1;"></span>
+        <button type="button" id="checkAll">Seleziona tutto</button>
+        <button type="button" id="uncheckAll">Deseleziona tutto</button>
+        <button type="button" id="reset">Reset</button>
+    </div>
+
+    <p class="muted" style="margin:0;">
+        Salva automaticamente nel browser (localStorage). Se cambi dispositivo o browser, non trovi le spunte.
+    </p>
+    </header>
+
+    <main>
+    <ul id="list"></ul>
+    </main>
+
+    <script>
+    // 1) Definisci qui le voci della checklist
+    const items = [
+        { id: "a1", title: "Installare gli strumenti", desc: "Editor, estensioni, repo clonato, ecc." },
+        { id: "a2", title: "Leggere le istruzioni", desc: "Capire obiettivi e requisiti prima di partire." },
+        { id: "a3", title: "Fare il primo test", desc: "Eseguire un test minimo per verificare che tutto funzioni." },
+        { id: "a4", title: "Consolidare e pulire", desc: "Rifiniture e sistemazione finale." },
+    ];
+
+    // 2) Namespace per evitare collisioni tra più checklist
+    const STORAGE_KEY = "checklist:v1";
+
+    const $list = document.getElementById("list");
+    const $progress = document.getElementById("progress");
+    const $lastSaved = document.getElementById("lastSaved");
+
+    const $checkAll = document.getElementById("checkAll");
+    const $uncheckAll = document.getElementById("uncheckAll");
+    const $reset = document.getElementById("reset");
+
+    function nowString() {
+        const d = new Date();
+        return d.toLocaleString("it-IT", { dateStyle: "medium", timeStyle: "short" });
+    }
+
+    function loadState() {
+        try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) return { checked: {}, lastSaved: null };
+        const parsed = JSON.parse(raw);
+        return {
+            checked: parsed.checked || {},
+            lastSaved: parsed.lastSaved || null
+        };
+        } catch {
+        return { checked: {}, lastSaved: null };
+        }
+    }
+
+    function saveState(state) {
+        const payload = {
+        checked: state.checked,
+        lastSaved: Date.now()
+        };
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
+        return payload.lastSaved;
+    }
+
+    function render(state) {
+        $list.innerHTML = "";
+
+        for (const item of items) {
+        const li = document.createElement("li");
+
+        const label = document.createElement("label");
+        const cb = document.createElement("input");
+        cb.type = "checkbox";
+        cb.dataset.id = item.id;
+        cb.checked = Boolean(state.checked[item.id]);
+
+        const title = document.createElement("span");
+        title.textContent = item.title;
+
+        label.appendChild(cb);
+        label.appendChild(title);
+
+        li.appendChild(label);
+
+        if (item.desc) {
+            const p = document.createElement("div");
+            p.className = "desc";
+            p.textContent = item.desc;
+            li.appendChild(p);
+        }
+
+        $list.appendChild(li);
+        }
+
+        updateUI(state);
+    }
+
+    function updateUI(state) {
+        const done = items.reduce((acc, it) => acc + (state.checked[it.id] ? 1 : 0), 0);
+        $progress.textContent = `${done}/${items.length}`;
+
+        if (state.lastSaved) {
+        $lastSaved.textContent = `Ultimo salvataggio: ${new Date(state.lastSaved).toLocaleString("it-IT", { dateStyle:"medium", timeStyle:"short" })}`;
+        } else {
+        $lastSaved.textContent = "";
+        }
+    }
+
+    // Init
+    let state = loadState();
+    render(state);
+
+    // Listen changes (event delegation)
+    $list.addEventListener("change", (e) => {
+        const el = e.target;
+        if (!(el instanceof HTMLInputElement)) return;
+        if (el.type !== "checkbox") return;
+
+        const id = el.dataset.id;
+        state.checked[id] = el.checked;
+
+        const ts = saveState(state);
+        state.lastSaved = ts;
+
+        updateUI(state);
+    });
+
+    // Bulk actions
+    $checkAll.addEventListener("click", () => {
+        for (const it of items) state.checked[it.id] = true;
+        state.lastSaved = saveState(state);
+        render(state);
+    });
+
+    $uncheckAll.addEventListener("click", () => {
+        for (const it of items) state.checked[it.id] = false;
+        state.lastSaved = saveState(state);
+        render(state);
+    });
+
+    $reset.addEventListener("click", () => {
+        localStorage.removeItem(STORAGE_KEY);
+        state = { checked: {}, lastSaved: null };
+        render(state);
+    });
+    </script>
+</body>
+</html>
