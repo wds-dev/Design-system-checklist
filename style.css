@@ -64,11 +64,11 @@ button#uncheckAll:hover {
 button#reset {
     border-color: rgb(137, 56, 56);
     background-color: rgb(255, 206, 206);
-    color: white;
 }
 
 button#reset:hover {
     background-color: rgb(255, 109, 109);
+    color: white;
 }
 
 button:hover {
